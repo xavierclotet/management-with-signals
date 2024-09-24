@@ -1,5 +1,18 @@
 @if(boardgame(); as boardgame) {
-<p>
-  {{ boardgame.rank }} - <a href="#" [routerLink]="['/boardgame', boardgame.gameId]">{{ boardgame.name }}</a>
-</p>
+<div class="card m-4 w-80 shadow">
+  <figure>
+    <img [src]="boardgame.thumbnail" alt="Boardgame thumbnail" [routerLink]="['/boardgame', boardgame.gameId]"
+         class="cursor-pointer rounded-xl" />
+  </figure>
+  <div class="card-body items-center text-center">
+    <h2 class="card-title"> <a href="#" [routerLink]="['/boardgame', boardgame.gameId]">{{
+        boardgame.name }}</a></h2>
+        <p>
+          Rank: {{ boardgame.rank }}
+          </p>
+    <p>
+      Year published: {{ boardgame.yearPublished }}
+    </p>
+    </div>
+    </div>
 }

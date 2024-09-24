@@ -1,9 +1,11 @@
 <body>
 
   <main>
-    @for (boardgame of store.entities(); track $index) {
-    <app-boardgame-card [boardgame]="boardgame"></app-boardgame-card>
-    }
+    <div class="grid grid-cols-6 gap-3">
+      @for (boardgame of store.entities(); track $index) {
+      <app-boardgame-card [boardgame]="boardgame"></app-boardgame-card>
+      }
+    </div>
 
   </main>
 
