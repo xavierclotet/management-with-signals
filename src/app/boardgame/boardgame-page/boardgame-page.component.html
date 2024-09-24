@@ -1,0 +1,10 @@
+<body>
+
+  <main>
+    @for (boardgame of store.entities(); track $index) {
+    <app-boardgame-card [boardgame]="boardgame"></app-boardgame-card>
+    }
+
+  </main>
+
+</body>

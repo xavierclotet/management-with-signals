@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
 
-App to manage a list of items using SignalStore.
+App to manage a list of items using Ngrx SignalStore.
 
 ## Add Jest instead of Karma
 

@@ -1,0 +1,5 @@
+@if(boardgame(); as boardgame) {
+<p>
+  {{ boardgame.rank }} - <a href="#" [routerLink]="['/boardgame', boardgame.gameId]">{{ boardgame.name }}</a>
+</p>
+}
