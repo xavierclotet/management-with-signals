@@ -1,11 +1,10 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { BoardgamesStore } from '../boardgames.store';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-boardgame-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [BoardgamesStore],
   templateUrl: './boardgame-detail.component.html',
   styleUrl: './boardgame-detail.component.scss'

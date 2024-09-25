@@ -1,1 +1,6 @@
-boardgame: {{boardgame() | json }}
+@if(boardgame(); as boardgame) {
+
+https://bgg-json.azurewebsites.net/thing/{{ boardgame.gameId }}<br>
+https://boardgamegeek.com/boardgame/{{ boardgame.gameId }}
+
+}

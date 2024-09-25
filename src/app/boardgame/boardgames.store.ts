@@ -27,7 +27,9 @@ export const BoardgamesStore = signalStore(
   }),
   withHooks({
     onInit(store) {
-      store.loadHotness()
+      if (store.entities().length === 0) {
+        store.loadHotness();
+      }
     },
   })
 );
