@@ -12,6 +12,6 @@ export class BoardgameDetailComponent {
   protected boardgameSore = inject(BoardgamesStore);
   protected id = input.required<number>();
   protected boardgame = computed(
-    () => this.boardgameSore.entityMap()[this.id()],
+    () => this.boardgameSore.boardgameEntityMap()[this.id()],
   );
 }

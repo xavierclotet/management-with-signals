@@ -1,6 +1,7 @@
 import {
   patchState,
   signalStore,
+  type,
   withComputed,
   withHooks,
   withMethods,
@@ -8,30 +9,38 @@ import {
 } from "@ngrx/signals";
 import {
   addEntities,
+  entityConfig,
   SelectEntityId,
   withEntities,
 } from "@ngrx/signals/entities";
 import { BoardGame } from "./boardgame.model";
 import { computed, inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { catchError, exhaustMap, Observable, pipe, tap } from "rxjs";
+import { catchError, delay, exhaustMap, finalize, Observable, pipe, switchMap, tap } from "rxjs";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
 
-const selectId: SelectEntityId<BoardGame> = (bg) => bg.gameId;
+const boardgameConfig = entityConfig({
+  entity: type<BoardGame>(),
+  collection: 'boardgame',
+  selectId: (bg) => bg.gameId,
+});
 
 export const BoardgamesStore = signalStore(
   {
     providedIn: "root",
   },
-  withEntities<BoardGame>(),
-  withState<{ search: string }>({ search: "" }),
+  withEntities(boardgameConfig),
+  withState<{
+    search: string,
+    isLoading: boolean,
+  }>({ search: "", isLoading: false }),
   withComputed((store) => {
     return {
       filteredBoardGames: computed(() => {
         if (store.search()) {
-          return store.entities().filter(bg => bg.name?.toLocaleLowerCase().includes(store.search().toLocaleLowerCase()))
+          return store.boardgameEntities().filter(bg => bg.name?.toLocaleLowerCase().includes(store.search().toLocaleLowerCase()))
         } else {
-          return store.entities()
+          return store.boardgameEntities()
         }
       })
     }
@@ -44,10 +53,20 @@ export const BoardgamesStore = signalStore(
       },
       loadHotness: rxMethod<void>(
         pipe(
-          exhaustMap(() => dataService.getHotness()),
-          tap((boardgames) =>
-            patchState(store, addEntities(boardgames, { selectId })),
-          ),
+          tap(() => patchState(store, { isLoading: true })),
+          exhaustMap(() => dataService.getHotness().pipe(
+            tap((boardgames) => {
+              patchState(store, (state) => ({
+                ...addEntities(boardgames, boardgameConfig)(state),
+                isLoading: false
+              }));
+            }),
+            catchError((error) => {
+              console.error('Error loading hotness:', error);
+              patchState(store, { isLoading: false })
+              return [];
+            })
+          )),
         ),
       ),
     };
