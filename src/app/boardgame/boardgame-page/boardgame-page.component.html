@@ -1,8 +1,8 @@
 <body>
 
   <main>
-    <div class="grid grid-cols-6 gap-3">
-      @for (boardgame of store.entities(); track $index) {
+    <div class="responsive-grid">
+      @for (boardgame of store.filteredBoardGames(); track boardgame.gameId) {
       <app-boardgame-card [boardgame]="boardgame"></app-boardgame-card>
       }
     </div>
