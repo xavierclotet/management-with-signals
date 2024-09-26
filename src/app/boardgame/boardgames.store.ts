@@ -2,6 +2,7 @@ import {
   patchState,
   signalStore,
   type,
+  watchState,
   withComputed,
   withHooks,
   withMethods,
@@ -14,10 +15,11 @@ import {
   withEntities,
 } from "@ngrx/signals/entities";
 import { BoardGame } from "./boardgame.model";
-import { computed, inject, Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { catchError, delay, exhaustMap, finalize, Observable, pipe, switchMap, tap } from "rxjs";
+import { computed, inject, isDevMode } from "@angular/core";
+import { catchError, exhaustMap, pipe, tap } from "rxjs";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
+import { BoardgamesDataService } from "./services";
+
 
 const boardgameConfig = entityConfig({
   entity: type<BoardGame>(),
@@ -74,22 +76,12 @@ export const BoardgamesStore = signalStore(
   withHooks({
     onInit(store) {
       store.loadHotness();
+      if (isDevMode()) {
+        watchState(store, (state) => {
+          console.log('[BoardgamesStore]', state);
+        });
+      }
     },
   }),
 );
 
-@Injectable({ providedIn: "root" })
-export class BoardgamesDataService {
-  private http = inject(HttpClient);
-
-  public getHotness(): Observable<BoardGame[]> {
-    return this.http
-      .get<BoardGame[]>("https://bgg-json.azurewebsites.net/hot")
-      .pipe(
-        catchError((e) => {
-          console.error(e);
-          return [];
-        }),
-      );
-  }
-}

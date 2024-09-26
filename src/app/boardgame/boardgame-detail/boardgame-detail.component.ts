@@ -1,5 +1,6 @@
 import { Component, computed, inject, input } from "@angular/core";
 import { BoardgamesStore } from "../boardgames.store";
+import { BoardgamesDataService } from "../services";
 
 @Component({
   selector: "app-boardgame-detail",
@@ -11,7 +12,15 @@ import { BoardgamesStore } from "../boardgames.store";
 export class BoardgameDetailComponent {
   protected boardgameSore = inject(BoardgamesStore);
   protected id = input.required<number>();
+  protected boardgameDataService = inject(BoardgamesDataService);
   protected boardgame = computed(
-    () => this.boardgameSore.boardgameEntityMap()[this.id()],
+    () => {
+      //  this.boardgameDataService.getBoardgameDetails(this.id())
+      return this.boardgameSore.boardgameEntityMap()[this.id()];
+    }
   );
+
+  constructor() {
+
+  }
 }

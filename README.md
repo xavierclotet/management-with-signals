@@ -13,3 +13,6 @@ https://thymikee.github.io/jest-preset-angular/docs/getting-started/installation
 
 https://ngrx.io/guide/signals/signal-store
 
+## ngrx-toolkit
+
+https://github.com/angular-architects/ngrx-toolkit?tab=readme-ov-file#devtools-withdevtools

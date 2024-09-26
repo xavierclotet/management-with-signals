@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
-import { BoardgamesDataService, BoardgamesStore } from "../boardgames.store";
-import { CommonModule, JsonPipe } from "@angular/common";
-import { HttpClient } from "@angular/common/http";
+import { BoardgamesStore } from "../boardgames.store";
+import { CommonModule } from "@angular/common";
 import { BoardgameCardComponent } from "../boardgame-card/boardgame-card.component";
 import { BoardGame } from "../boardgame.model";
 
