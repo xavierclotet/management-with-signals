@@ -13,12 +13,7 @@ export class BoardgamesDataService {
   public getHotness(): Observable<BoardGame[]> {
     return this.http
       .get<BoardGame[]>("https://bgg-json.azurewebsites.net/hot")
-      .pipe(
-        catchError((e) => {
-          console.error(e);
-          return [];
-        }),
-      );
+
   }
 
   /**
