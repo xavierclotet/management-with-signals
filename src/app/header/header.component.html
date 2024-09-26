@@ -34,8 +34,8 @@
         </ul>
     </div>
     <div class="navbar-end">
-        <app-theme-switcher></app-theme-switcher>
-        <form (submit)="updateSearchTerm()" class="ml-4">
+      @if (router.url.startsWith('/hotness')) {
+      <form (submit)="updateSearchTerm()" class="mr-4">
             <div class="form-control">
                 <input
                     name="search"
@@ -47,8 +47,9 @@
                 />
             </div>
         </form>
-
-        <div class="dropdown dropdown-end">
+        }
+        <app-theme-switcher></app-theme-switcher>
+        <!-- <div class="dropdown dropdown-end">
             <div
                 tabindex="0"
                 role="button"
@@ -67,6 +68,6 @@
             >
                 <li><a>Logout</a></li>
             </ul>
-        </div>
+        </div>-->
     </div>
 </div>

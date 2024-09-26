@@ -4,11 +4,13 @@ import { switchMap, catchError, of } from "rxjs";
 import { toObservable, toSignal } from "@angular/core/rxjs-interop";
 import { CommonModule } from "@angular/common";
 import { BoardgamesDataService } from "../services/boardgames-data.service";
+import { DecodeHtmlPipe, SafeHtmlPipe } from "../../data/core/pipes";
+
 
 @Component({
   selector: "app-boardgame-detail",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DecodeHtmlPipe],
   templateUrl: "./boardgame-detail.component.html",
   styleUrl: "./boardgame-detail.component.scss",
 })
