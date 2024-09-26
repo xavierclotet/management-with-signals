@@ -11,6 +11,10 @@ export const routes: Routes = [
       import('./boardgame/boardgame-page/boardgame-page.component').then(m => m.BoardgamePageComponent),
   },
   {
+    path: 'collection',
+    loadComponent: () => import('./boardgame/boardgame-collection/boardgame-collection.component').then(m => m.BoardgameCollectionComponent)
+  },
+  {
     path: '',
     redirectTo: '/hotness',
     pathMatch: 'full',

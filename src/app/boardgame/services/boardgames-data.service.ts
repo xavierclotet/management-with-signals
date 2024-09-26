@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { BoardGame } from '../boardgame.model';
 import { BoardgameDetails } from '../boardgame-detail';
+import { BoardGameCollection } from '../boardgame-collection';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,11 @@ export class BoardgamesDataService {
    */
   public getBoardgameDetails(gameId: number): Observable<BoardgameDetails> {
     return this.http
-      .get<BoardgameDetails>(`https://bgg-json.azurewebsites.net/thing/${gameId}`)
-      .pipe(
-        catchError((e) => {
-          console.error(e);
-          return [];
-        }),
-      );
+      .get<BoardgameDetails>(`https://bgg-json.azurewebsites.net/thing/${gameId}`);
+  }
+
+  public getBoardgameColelction(user: string): Observable<BoardGameCollection[]> {
+    return this.http
+      .get<BoardGameCollection[]>(`https://bgg-json.azurewebsites.net/collection/${user}`);
   }
 }
