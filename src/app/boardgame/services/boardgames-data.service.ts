@@ -24,9 +24,9 @@ export class BoardgamesDataService {
   /**
    * getBoardgameDetail
    */
-  public getBoardgameDetails(gameId: number): Observable<BoardgameDetails[]> {
+  public getBoardgameDetails(gameId: number): Observable<BoardgameDetails> {
     return this.http
-      .get<BoardgameDetails[]>(`https://bgg-json.azurewebsites.net/thing/${gameId}`)
+      .get<BoardgameDetails>(`https://bgg-json.azurewebsites.net/thing/${gameId}`)
       .pipe(
         catchError((e) => {
           console.error(e);

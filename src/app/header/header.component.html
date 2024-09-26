@@ -34,7 +34,8 @@
         </ul>
     </div>
     <div class="navbar-end">
-        <form (submit)="updateSearchTerm()">
+        <app-theme-switcher></app-theme-switcher>
+        <form (submit)="updateSearchTerm()" class="ml-4">
             <div class="form-control">
                 <input
                     name="search"
