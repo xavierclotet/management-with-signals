@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { ThemeService } from '../services';
+import { ThemeSwitcherService } from './theme-switcher.service';
+
 
 @Component({
   selector: 'app-theme-switcher',
@@ -43,5 +44,5 @@ import { ThemeService } from '../services';
   `
 })
 export class ThemeSwitcherComponent {
-  protected themeService = inject(ThemeService);
+  protected themeService = inject(ThemeSwitcherService);
 }

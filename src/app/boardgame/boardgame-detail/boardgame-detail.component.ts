@@ -1,10 +1,9 @@
 import { Component, computed, inject, input } from "@angular/core";
 import { BoardgamesStore } from "../boardgames.store";
-import { BoardgamesDataService } from "../services";
-import { Observable, switchMap, startWith, catchError, of } from "rxjs";
-import { BoardgameDetails } from "./boardgame-detail.model";
+import { switchMap, catchError, of } from "rxjs";
 import { toObservable, toSignal } from "@angular/core/rxjs-interop";
 import { CommonModule } from "@angular/common";
+import { BoardgamesDataService } from "../services/boardgames-data.service";
 
 @Component({
   selector: "app-boardgame-detail",

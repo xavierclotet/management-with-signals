@@ -5,7 +5,7 @@ import { DOCUMENT } from '@angular/common';
 @Injectable({
   providedIn: 'root'
 })
-export class ThemeService {
+export class ThemeSwitcherService {
   private document = inject(DOCUMENT);
   private theme = signal<'light' | 'dark'>('light');
 

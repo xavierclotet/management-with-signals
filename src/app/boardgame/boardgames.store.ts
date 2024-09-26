@@ -18,7 +18,7 @@ import { BoardGame } from "./boardgame.model";
 import { computed, inject, isDevMode } from "@angular/core";
 import { catchError, exhaustMap, pipe, tap } from "rxjs";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
-import { BoardgamesDataService } from "./services";
+import { BoardgamesDataService } from "./services/boardgames-data.service";
 
 
 const boardgameConfig = entityConfig({

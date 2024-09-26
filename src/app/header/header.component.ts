@@ -4,7 +4,7 @@ import { BoardgamesStore } from "../boardgame/boardgames.store";
 import { RouterModule } from "@angular/router";
 import { debounceTime, distinctUntilChanged, Subject, tap } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { ThemeSwitcherComponent } from "../boardgame/theme-switcher/theme-switcher.component";
+import { ThemeSwitcherComponent } from "../theme-switcher/theme-switcher.component";
 
 @Component({
   selector: "app-header",
