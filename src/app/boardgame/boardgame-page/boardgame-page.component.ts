@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { BoardgamesStore } from "../boardgames.store";
 import { CommonModule } from "@angular/common";
 import { BoardgameCardComponent } from "../boardgame-card/boardgame-card.component";
-import { BoardGame } from "../boardgame.model";
 
 @Component({
   selector: "app-boardgame-page",

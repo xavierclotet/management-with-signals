@@ -11,7 +11,6 @@ import {
 import {
   addEntities,
   entityConfig,
-  SelectEntityId,
   withEntities,
 } from "@ngrx/signals/entities";
 import { BoardGame } from "./boardgame.model";

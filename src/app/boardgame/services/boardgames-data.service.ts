@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { BoardGame } from '../boardgame.model';
 import { BoardgameDetails } from '../boardgame-detail';
 import { BoardGameCollection } from '../boardgame-collection';
