@@ -1,71 +1,61 @@
-
-@if(boardgameDetails$ | async; as details) {
-<div class="card card-side bg-base-100 shadow-xl mr-4">
-  <figure class="w-auto overflow-hidden ml-4">
-    <img
-         [src]="details.image"
-         [alt]="details.name"
-         title="{{details.name}}"
-         class="w-full h-full object-cover" />
-  </figure>
-  <div class="card-body">
-    <h2 class="card-title">
-      {{details.name }}
-      <span class="font-bold italic">{{ details.isExpansion ? '(Expansion)' : '' }}</span>
-      <span class="text-sm font-bold italic"> {{details.yearPublished}}</span>
-    </h2>
-    <div>{{details.description | decodeHtml }}</div>
-    
-    <div>
-      <span class="font-bold">Bgg Rating: </span> {{details.bggRating}} ({{details.averageRating}})
-    </div>
-    
-    @if(details.rank > -1) {
-    <div>
-      <span class="font-bold">Rank: </span> {{details.rank}}
-    </div>
-    }
-    
-    <div>
-      <span class="font-bold">Players: </span> {{details.minPlayers}} to {{details.maxPlayers}}
-    </div>
-    <div class="font-bold"> Mechanics:</div>
-    <ul>
-      @for (mechanic of details.mechanics; track $index) {
-      <span>{{mechanic}} / </span>
+@if (boardgameDetails(); as details) {
+  <div class="card card-side bg-base-100 shadow-xl mr-4">
+    <figure class="w-auto overflow-hidden ml-4">
+      <img [src]="details.image" [alt]="details.name" title="{{details.name}}" class="w-full h-full object-cover" />
+    </figure>
+    <div class="card-body">
+      <h2 class="card-title">
+        {{details.name }}
+        <span class="font-bold italic">{{ details.isExpansion ? '(Expansion)' : '' }}</span>
+        <span class="text-sm font-bold italic"> {{details.yearPublished}}</span>
+      </h2>
+      <div>{{details.description | decodeHtml }}</div>
+      
+      <div>
+        <span class="font-bold">Bgg Rating: </span> {{details.bggRating}} ({{details.averageRating}})
+      </div>
+      
+      @if (details.rank > -1) {
+        <div>
+          <span class="font-bold">Rank: </span> {{details.rank}}
+        </div>
       }
-    </ul>
-    
-    <div>
-      <span class="font-bold">Designers: </span>
-      @for (designer of details.designers; track $index) {
-      <span>{{designer}} </span>
-      }
-    </div>
-    <div>
-      <span class="font-bold">Publishers: </span>
-      @for (publisher of details.publishers; track $index) {
-      <span>{{publisher}} / </span>
-      }
-    </div>
-    <!--<div>
-                              @for (playerPollResult of details.playerPollResults; track $index) {
-                              <div>
-                                <span class="font-bold">{{playerPollResult.numPlayers}} Players: </span>
-                                <span>{{playerPollResult.best}} to {{playerPollResult.recommended}} to {{playerPollResult.notRecommended}}</span>
-                              </div>
-                              }
-                            </div>-->
-    <div class="card-actions justify-end">
-      <button class="btn btn-primary" (click)="navigateToBgg(details.gameId)">Go to BGG</button>
+      
+      <div>
+        <span class="font-bold">Players: </span> {{details.minPlayers}} to {{details.maxPlayers}}
+      </div>
+      <div class="font-bold"> Mechanics:</div>
+      <ul>
+        @for (mechanic of details.mechanics; track $index) {
+          <span>{{mechanic}} / </span>
+        }
+      </ul>
+      
+      <div>
+        <span class="font-bold">Designers: </span>
+        @for (designer of details.designers; track $index) {
+          <span>{{designer}} </span>
+        }
+      </div>
+      <div>
+        <span class="font-bold">Publishers: </span>
+        @for (publisher of details.publishers; track $index) {
+          <span>{{publisher}} / </span>
+        }
+      </div>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary" (click)="navigateToBgg(details.gameId)">Go to BGG</button>
+      </div>
     </div>
   </div>
-</div>
-} @else {
-<div class="flex flex-col items-center justify-center w-full h-screen">
-  <div class="loader"></div>
-  <p class="text-gray-600 mt-2">Loading board games...</p>
-
-</div>
-
+} @else if (isLoading()) {
+  <div class="flex flex-col items-center justify-center w-full h-screen">
+    <div class="loader"></div>
+    <p class="text-gray-600 mt-2">Loading board game details...</p>
+  </div>
+} @else if (error()) {
+  <div class="flex flex-col items-center justify-center w-full h-screen">
+    <div class="text-red-600 text-xl mb-2">Error</div>
+    <p class="text-gray-600">Unable to load board game details. Please try again later.</p>
+  </div>
 }

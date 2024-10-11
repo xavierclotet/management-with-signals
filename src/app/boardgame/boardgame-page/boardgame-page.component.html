@@ -1,13 +1,12 @@
-
-
   <main>
     @if (store.isLoading()) {
     <div class="flex flex-col items-center justify-center w-full h-screen">
-      <div class="loader"></div>
-      <p class="text-gray-600 mt-2">Loading board games...</p>
+      <div class="loader" aria-label="Loading"></div>
+      <p class="text-gray-600 mt-2" aria-live="polite">Loading board games...</p>
     </div>
     } @else {
     @if (store.filteredBoardGames().length > 0) {
+        <h1 class="sr-only">Board Game List</h1>
         <div class="responsive-grid">
           @for (boardgame of store.filteredBoardGames(); track boardgame.gameId) {
           <app-boardgame-card [boardgame]="boardgame"></app-boardgame-card>

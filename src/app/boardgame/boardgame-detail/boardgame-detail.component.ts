@@ -1,10 +1,11 @@
-import { Component, computed, inject, input } from "@angular/core";
+import { Component, computed, effect, inject, input, signal } from "@angular/core";
 import { BoardgamesStore } from "../boardgames.store";
-import { switchMap, catchError, of } from "rxjs";
-import { toObservable } from "@angular/core/rxjs-interop";
+import { switchMap, catchError, of, finalize, tap } from "rxjs";
+import { takeUntilDestroyed, toObservable } from "@angular/core/rxjs-interop";
 import { CommonModule } from "@angular/common";
 import { BoardgamesDataService } from "../services/boardgames-data.service";
 import { DecodeHtmlPipe } from "../../data/core/pipes";
+import { BoardgameDetails } from "./boardgame-detail.model";
 
 
 @Component({
@@ -21,9 +22,34 @@ export class BoardgameDetailComponent {
   protected boardgame = computed(
     () => this.boardgameStore.boardgameEntityMap()[this.id()]
   );
-  protected boardgameDetails$ = toObservable(this.id).pipe(
-    switchMap(id => this.boardgameDataService.getBoardgameDetails(id).pipe(catchError(() => of(null)))),
-  );
+
+
+  protected isLoading = signal(false)
+  protected error = signal(false)
+  protected boardgameDetails = signal<BoardgameDetails | null>(null)
+
+  constructor() {
+    effect(() => {
+      this.isLoading.set(true)
+      const subscription = this.boardgameDataService.getBoardgameDetails(this.id()).pipe(
+        tap((details) => {
+          this.error.set(false)
+          if (!details) {
+            this.error.set(true)
+          } else {
+            this.boardgameDetails.set(details)
+          }
+        }),
+        finalize(() => this.isLoading.set(false)),
+        catchError(() => {
+          this.error.set(true)
+          return of(null)
+        })
+      ).subscribe()
+
+      return () => subscription.unsubscribe()
+    }, { allowSignalWrites: true })
+  }
 
 
   navigateToBgg(gameId: number) {
