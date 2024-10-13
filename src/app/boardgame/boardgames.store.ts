@@ -18,6 +18,7 @@ import { computed, inject, isDevMode } from "@angular/core";
 import { catchError, exhaustMap, pipe, tap } from "rxjs";
 import { rxMethod } from "@ngrx/signals/rxjs-interop";
 import { BoardgamesDataService } from "./services/boardgames-data.service";
+import { withDevtools } from "@angular-architects/ngrx-toolkit";
 
 
 const boardgameConfig = entityConfig({
@@ -82,5 +83,6 @@ export const BoardgamesStore = signalStore(
       }
     },
   }),
+  withDevtools(boardgameConfig.collection)
 );
 
