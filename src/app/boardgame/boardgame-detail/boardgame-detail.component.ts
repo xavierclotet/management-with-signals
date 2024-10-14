@@ -29,7 +29,30 @@ export class BoardgameDetailComponent {
   protected boardgameDetails = signal<BoardgameDetails | null>(null)
 
   constructor() {
-    effect(() => {
+    toObservable(this.id)
+    .pipe(
+      takeUntilDestroyed(),
+      switchMap((id) => {
+        this.isLoading.set(true)
+        return this.boardgameDataService.getBoardgameDetails(id).pipe(
+          tap((details) => {
+            this.error.set(false)
+            if (!details) {
+              this.error.set(true)
+            } else {
+              this.boardgameDetails.set(details)
+            }
+          }),
+          finalize(() => this.isLoading.set(false)),
+          catchError(() => {
+            this.error.set(true)
+            return of(null)
+          }),
+        )
+      }),
+    )
+    .subscribe()
+    /* effect(() => {
       this.isLoading.set(true)
       const subscription = this.boardgameDataService.getBoardgameDetails(this.id()).pipe(
         tap((details) => {
@@ -48,7 +71,7 @@ export class BoardgameDetailComponent {
       ).subscribe()
 
       return () => subscription.unsubscribe()
-    }, { allowSignalWrites: true })
+    }, { allowSignalWrites: true }) */
   }
 
 
