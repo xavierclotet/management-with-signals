@@ -36,6 +36,7 @@ export const BoardgamesStore = signalStore(
     search: string,
     isLoading: boolean,
   }>({ search: "", isLoading: false }),
+  //withSearchTerm(),
   withComputed((store) => {
     return {
       filteredBoardGames: computed(() => {
@@ -58,10 +59,8 @@ export const BoardgamesStore = signalStore(
           tap(() => patchState(store, { isLoading: true })),
           exhaustMap(() => dataService.getHotness().pipe(
             tap((boardgames) => {
-              patchState(store, (state) => ({
-                ...addEntities(boardgames, boardgameConfig)(state),
-                isLoading: false
-              }));
+              patchState(store, addEntities(boardgames, boardgameConfig), { isLoading: false})
+ 
             }),
             catchError((error) => {
               console.error('Error loading hotness:', error);
